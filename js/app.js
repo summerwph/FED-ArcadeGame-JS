@@ -52,7 +52,7 @@ let Player = function(x, y, speed) {
   this.height = 30;
   this.width = 30;
   this.speed = speed;
-  this.sprite = 'images/char-boy.png';
+  this.sprite = 'images/char-horn-girl.png';
 
 }
 
@@ -70,23 +70,29 @@ Player.prototype.update = function() {
     }
 
     // Checking if the player touch the water area or top wall to win the game.
-    if (this.y <=50) {
-      this.y = -20;
+    console.log(this.y);
+    if (this.y <= -35) {
+        this.x = 202;
+        this.y = 405;
+        alert("Congraluations! You Win!");
+        gameLevel += 1;
+        increaseEnemies(gameLevel);
     }
 };
 
 // Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    displayLevel(gameLevel);
 };
 
 Player.prototype.handleInput = function(dt) {
   switch (dt) {
     case "up":
-      this.y -= 50;
+      this.y -= 55;
       break;
     case "down":
-      this.y += 50;
+      this.y += 55;
       break;
     case "left":
       this.x -= 50;
@@ -98,10 +104,35 @@ Player.prototype.handleInput = function(dt) {
   }
 };
 
-let allEnemies = [];
+// Display level of the game
+const displayLevel = function(l) {
+    const canvas = document.getElementsByTagName('canvas');
+
+    levelDiv.innerHTML = 'Level : ' + l
+    document.body.insertBefore(levelDiv, canvas[0]);
+};
+
+// Increase number of enemies on screen based on player's score
+const increaseEnemies = function(numEnemies) {
+    // remove all previous enemies on canvas
+    allEnemies.clear();
+
+    // load new set of enemies
+    for (let i = 1; i <= numEnemies; i++) {
+        let enemy = new Enemy(0, Math.random() * 184 + 50, Math.random() * 256);
+
+        allEnemies.add(enemy);
+    }
+    console.log(allEnemies);
+};
+
+let allEnemies = new Set();
 let enemy = new Enemy(-100, Math.random() * 184 + 50, Math.random() * 256);
 let player = new Player(202, 405);
-allEnemies.push(enemy);
+allEnemies.add(enemy);
+
+var gameLevel = 1;
+var levelDiv = document.createElement('div');
 
 
 // This listens for key presses and sends the keys to your
