@@ -76,6 +76,7 @@ Player.prototype.update = function() {
         this.y = 405;
         alert("Congraluations! You Win!");
         gameLevel += 1;
+        document.querySelector('.levels').innerHTML = gameLevel;
         increaseEnemies(gameLevel);
     }
 };
@@ -83,7 +84,7 @@ Player.prototype.update = function() {
 // Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    displayLevel(gameLevel);
+    // displayLevel(gameLevel);
 };
 
 Player.prototype.handleInput = function(dt) {
@@ -104,14 +105,6 @@ Player.prototype.handleInput = function(dt) {
   }
 };
 
-// Display level of the game
-const displayLevel = function(l) {
-    const canvas = document.getElementsByTagName('canvas');
-
-    levelDiv.innerHTML = 'Level : ' + l
-    document.body.insertBefore(levelDiv, canvas[0]);
-};
-
 // Increase number of enemies on screen based on player's score
 const increaseEnemies = function(numEnemies) {
     // remove all previous enemies on canvas
@@ -126,14 +119,11 @@ const increaseEnemies = function(numEnemies) {
     console.log(allEnemies);
 };
 
+let gameLevel = 1;
 let allEnemies = new Set();
 let enemy = new Enemy(-100, Math.random() * 184 + 50, Math.random() * 256);
 let player = new Player(202, 405);
 allEnemies.add(enemy);
-
-var gameLevel = 1;
-var levelDiv = document.createElement('div');
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
