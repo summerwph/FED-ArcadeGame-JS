@@ -11,7 +11,7 @@ In this game you have a Player and Enemies (bugs). The goal of the player is to 
 ** Increase the number of enemies based on the level of game. **
 
 ### Demo Link
-GitHub Demo: https://summerwph.github.io/frontend-nanodegree-arcade-game/
+GitHub Demo: https://summerwph.github.io/FED-ArcadeGame-JS/
 
 ### Installation
 To run the game in local, you can follow the following steps:
